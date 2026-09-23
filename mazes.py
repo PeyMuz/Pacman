@@ -49,32 +49,43 @@ maze_level_1: list[str] = [
 ]
 
 def calculate_maze_data(maze_level: list[str]) -> tuple[list, list, list]:
+
     "Setup maze level"
+
     walls: list = []
     pellets: list = []
     power_pellets: list = []
 
-    #Iterate over each row of the maze level
+    # Each row needs 55 characters:
+    # 28 cells = 28 characters + 27 spaces
+    row_length = (MAZE_GRID_COLUMNS * 2) - 1
 
+    # Iterate over each row
     for row in range(MAZE_GRID_ROWS):
-    # Iterate over each column of the maze level
-        for column in range(MAZE_GRID_COLUMNS):
-            # Store the coordinates of the character[row][column]
-            character = maze_level[row][column]
 
-            # row index starts from 0 to 36 (37 not included)
+        # Make sure every row has the required length
+        maze_row = maze_level[row].ljust(row_length)
+
+        # Iterate over each column
+        for column in range(MAZE_GRID_COLUMNS):
+
+            # Get the character of the current cell
+            character = maze_row[column * 2]
+
+            # Calculate coordinates
             character_x: float = MAZE_LEVEL_START_X + CELL_SIZE * column
-            character_y: float = MAZE_LEVEL_START_Y + CELL_SIZE * row
+            character_y: float = MAZE_LEVEL_START_Y - CELL_SIZE * row
 
             if character == "X":
-                # append the coordinate of that wall to the walls list
+
                 walls.append((character_x, character_y))
+
             elif character == ".":
-                    pellets.append((character_x, character_y))
+
+                pellets.append((character_x, character_y))
+
             elif character == "0":
-                    power_pellets.append((character_x, character_y))
-# Return the list with all the coordinates
-#This allows us later to get this data in other files and store it as a variable
+
+                power_pellets.append((character_x, character_y))
 
     return walls, pellets, power_pellets
-        

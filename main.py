@@ -1,4 +1,6 @@
 import turtle
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from renderer import Wall, Pellet, PowerPellet
 
 def init_screen():
     """Initialize main screen, and it returns when called"""
@@ -13,7 +15,7 @@ def init_screen():
     screen.title("PACMAN by Kylle Bantog")
 
     # Set screen size
-    screen.setup(width=1000, height=600)
+    screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
 
     #color of the background
     screen.bgcolor("black")
@@ -32,6 +34,15 @@ def main() -> None:
 
    #Call the initialize function
    screen = init_screen()
+
+   wall_pen = Wall()
+   pellet_pen = Pellet()
+   power_pen = PowerPellet()
+
+   #call the instance function
+   wall_pen.draw()
+   pellet_pen.draw()
+   power_pen.draw()
 
    #Starts the game loop
    game_loop(screen)
