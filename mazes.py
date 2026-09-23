@@ -39,7 +39,7 @@ maze_level_1: list[str] = [
     "X . . . X X . . . . . . . . . . . . . . . . X X . . . X",
     "X X X . X X . X X . X X X X X X X X . X X . X X . X X X",
     "X X X . X X . X X . X X X X X X X X . X X . X X . X X X",
-    "X . . . . . . X X + . . . X X . . . . X X . . . . . 0 X",
+    "X . . . . . . X X + . . . X X . . . . X X . . . . . . X",
     "X . X X X X X X X X X X . X X . X X X X X X X X X X . X",
     "X . X X X X X X X X X X . X X . X X X X X X X X X X . X",
     "X 0 . . . . . . . . . . . 0 . . . . . . . . . . . . 0 X",
