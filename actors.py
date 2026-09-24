@@ -37,3 +37,27 @@ class Pacman(Actor):
     def move(self) -> None:
         if self.state != "stop":
             self.forward(self.move_speed)
+        #this will let pacman disappear from the side and reappear on the opposite side
+            if round(self.xcor()) < - SCREEN_WIDTH / 2:  # if it goes left, it will appear at the right
+                self.setx(SCREEN_WIDTH / 2)
+            elif round(self.xcor()) > SCREEN_WIDTH / 2: # if it goes right, it will appear at the left
+                self.setx(-SCREEN_WIDTH / 2)
+
+
+    #for movement
+
+    def turn_right(self) -> None:
+        self.setheading(0) # the number indicate kung saan nakaharaap dapat si pacman
+        self.state = "move"
+
+    def turn_left(self) -> None:
+        self.setheading(180)
+        self.state = "move"
+
+    def turn_up(self) -> None:
+        self.setheading(90)
+        self.state = "move"
+
+    def turn_down(self) -> None:
+        self.setheading(270)
+        self.state = "move"
