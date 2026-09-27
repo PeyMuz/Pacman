@@ -15,11 +15,14 @@ class Actor(turtle.Turtle):
         self.penup() #this will give the turtle to not draw a line as it moves. That's why it set as empty parenthesis.
         self.speed(0) #this turns off the animation quickly
 
+    def get_heading(self) -> int:
+        return round(self.heading())
+
 #for Pacman player
 class Pacman(Actor):
     "Pac-man player"
 
-    def __init__(self) -> None:
+    def __init__(self,walls) -> None:
         super().__init__()
         self.showturtle()
         self.shape("circle")
@@ -30,6 +33,7 @@ class Pacman(Actor):
         self.move_speed = PLAYER_MOVE_SPEED
         self.lives = 3 #this will show how many PACMAN live's he will get from the start of the game
         self.score = 0 #the default score will be zero at the first game
+        self.walls = walls
 
 
     #for the movement
@@ -43,6 +47,11 @@ class Pacman(Actor):
             elif round(self.xcor()) > SCREEN_WIDTH / 2: # if it goes right, it will appear at the left
                 self.setx(-SCREEN_WIDTH / 2)
 
+    def check_wall_collision(self) -> None:
+        round_x = round(self.xcor())
+        round_y = round(self.ycor())  
+        heading = self.get_heading()
+        half_cell = round(CELL_SIZE/2)
 
     #for movement
 
