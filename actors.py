@@ -4,7 +4,7 @@
 """
 
 import turtle
-from constants import CELL_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_MOVE_SPEED
+from constants import CELL_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT, PLAYER_MOVE_SPEED, SCALE_FACTOR
 
 class Actor(turtle.Turtle):
     "General Actor blueprint"
@@ -23,7 +23,7 @@ class Pacman(Actor):
         super().__init__()
         self.showturtle()
         self.shape("circle")
-        self.shapesize(1.4)
+        self.shapesize(1.4 * SCALE_FACTOR)
         self.pencolor("white")
         self.fillcolor("yellow")
         self.state = "stop" #this will stop pacman moving if the player decided to stop the character

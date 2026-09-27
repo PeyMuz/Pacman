@@ -2,6 +2,7 @@
 
 import turtle
 from mazes import calculate_maze_data, maze_level_1
+from constants import SCALE_FACTOR
 
 
 class Pen(turtle.Turtle):
@@ -12,7 +13,7 @@ class Pen(turtle.Turtle):
         self.hideturtle()
         self.penup()
         self.speed(0) # this will show how turtle speeds the drawing. If you set numbers (e.g 1), it will slowly animate it. But if yo uset it to  0, it will turn off the animation
-        self.walls, self.pellets, self.power_pellets = calculate_maze_data(
+        self.walls, self.pellets, self.power_pellets, self.pacman_start = calculate_maze_data(
             maze_level= maze_level_1
         )
 
@@ -23,7 +24,7 @@ class Wall(Pen):
     def __init__(self) -> None:
         super().__init__()
         self.shape(name= "square")
-        self.shapesize(1.2)
+        self.shapesize(1.2 * SCALE_FACTOR)
         self.pencolor("white")
         self.fillcolor("dodger blue") #to color the walls
 
@@ -45,7 +46,7 @@ class Pellet(Pen):
     def __init__(self) -> None:
         super().__init__()
         self.shape(name= "circle")
-        self.shapesize(0.35, 0.35)
+        self.shapesize(0.35 * SCALE_FACTOR, 0.35 * SCALE_FACTOR)
         self.pencolor("white")
         self.fillcolor("gold") #to color the walls
 
@@ -64,7 +65,7 @@ class PowerPellet(Pen):
     def __init__(self) -> None:
         super().__init__()
         self.shape(name="circle")
-        self.shapesize(0.8, 0.8)
+        self.shapesize(0.8 * SCALE_FACTOR, 0.8 * SCALE_FACTOR)
         self.pencolor("white")
         self.fillcolor("chartreuse")
 

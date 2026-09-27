@@ -12,8 +12,6 @@ from constants import (CELL_SIZE, MAZE_GRID_ROWS, MAZE_GRID_COLUMNS, MAZE_LEVEL_
 maze_level_1: list[str] = [
     "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
     "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
-    "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
-    "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
     "X 0 . . . . . . . . . . . X X . . . . . . . . . . . 0 X",
     "X . X X X X . X X X X X . X X . X X X X X . X X X X . X",
     "X . X X X X . X X X X X . X X . X X X X X . X X X X . X",
@@ -36,25 +34,25 @@ maze_level_1: list[str] = [
     "X 0 . . . . . . . . . . . X X . . . . . . . . . . . 0 X",
     "X . X X X X . X X X X X . X X . X X X X X . X X X X . X",
     "X . X X X X . X X X X X . X X . X X X X X . X X X X . X",
-    "X . . . X X . . . . . . . . . . . . . . . . X X . . . X",
+    "X . . . X X . . . . . . . + . . . . . . . . X X . . . X",
     "X X X . X X . X X . X X X X X X X X . X X . X X . X X X",
     "X X X . X X . X X . X X X X X X X X . X X . X X . X X X",
-    "X . . . . . . X X + . . . X X . . . . X X . . . . . . X",
+    "X . . . . . . X X . . . . X X . . . . X X . . . . . . X",
     "X . X X X X X X X X X X . X X . X X X X X X X X X X . X",
     "X . X X X X X X X X X X . X X . X X X X X X X X X X . X",
     "X 0 . . . . . . . . . . . 0 . . . . . . . . . . . . 0 X",
     "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
     "X X X X X X X X X X X X X X X X X X X X X X X X X X X X",
-    "X X X X X X X X X X X X X X X X X X X X X X X X X X X X"
 ]
 
-def calculate_maze_data(maze_level: list[str]) -> tuple[list, list, list]:
+def calculate_maze_data(maze_level: list[str]) -> tuple[list, list, list, tuple]:
 
     "Setup maze level"
 
     walls: list = []
     pellets: list = []
     power_pellets: list = []
+    pacman_start: tuple = (0, 0)  # fallback in case "+" is missing from the maze
 
     # Each row needs 55 characters:
     # 28 cells = 28 characters + 27 spaces
@@ -88,4 +86,10 @@ def calculate_maze_data(maze_level: list[str]) -> tuple[list, list, list]:
 
                 power_pellets.append((character_x, character_y))
 
-    return walls, pellets, power_pellets
+            elif character == "+":
+
+                # "+" marks Pacman's fixed starting spot - treated as an
+                # empty path (no wall, no pellet placed here)
+                pacman_start = (character_x, character_y)
+
+    return walls, pellets, power_pellets, pacman_start

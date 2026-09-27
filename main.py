@@ -1,8 +1,29 @@
 import turtle
-import random
+import sys
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 from renderer import Wall, Pellet, PowerPellet
 from actors import Pacman
+
+def fix_windows_dpi_scaling():
+    """Force true 1:1 pixel rendering on Windows.
+
+    Without this, Windows display scaling (125%, 150%, etc. - common on
+    laptops with high-res but small screens) causes tkinter/turtle to
+    mis-map pixels, making the window render as if zoomed in/cropped.
+    This has no effect on Mac/Linux or on PCs already at 100% scaling.
+    """
+    if sys.platform == "win32":
+        import ctypes
+        try:
+            # Per-monitor DPI aware (most accurate)
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)
+        except Exception:
+            try:
+                # Fallback for older Windows versions
+                ctypes.windll.user32.SetProcessDPIAware()
+            except Exception:
+                pass
+
 
 def init_screen():
     """Initialize main screen, and it returns when called"""
@@ -46,6 +67,9 @@ def game_loop(screen, player) -> None:
 def main() -> None:
    #this function starts a game, it setes everything up - the screen, the players levels.
 
+   #Fix DPI scaling issue BEFORE creating the window (laptop vs PC bug)
+   fix_windows_dpi_scaling()
+
    #Call the initialize function
    screen = init_screen()
 
@@ -58,11 +82,9 @@ def main() -> None:
    pellet_pen.draw()
    power_pen.draw()
 
-   #Player starting position 
+   #Player starting position - always the fixed "+" spot in the maze, not random
 
-   player_start_coor = random.choice(pellet_pen.pellets)
-   player_start_x = player_start_coor[0]
-   player_start_y = player_start_coor[1]
+   player_start_x, player_start_y = wall_pen.pacman_start
 
    #Create Pacman
    player = Pacman()
