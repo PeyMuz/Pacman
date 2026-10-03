@@ -54,6 +54,29 @@ class Pacman(Actor):
         half_cell = round(CELL_SIZE/2)
 
     #for movement
+        for x, y in self.walls:
+            dx = round_x - x
+            dy = round_y - y
+
+            if heading == 0: #Moving Right
+                if -half_cell < dx + half_cell < half_cell and -half_cell <= dy <= half_cell:
+                    self.setx(x - CELL_SIZE)
+                    self.state = "stop"
+
+            elif heading == 180: #Moving Left
+                if -half_cell < dx - half_cell < half_cell and -half_cell <= dy <= half_cell:
+                    self.setx(x + CELL_SIZE)
+                    self.state = "stop"
+
+            elif heading == 90: #Moving up
+                if -half_cell < dx <= half_cell and -half_cell <= dy + half_cell < half_cell:
+                    self.setx(y - CELL_SIZE)
+                    self.state = "stop"
+
+            elif heading == 270: #Moving up
+                if -half_cell <= dx <= half_cell and -half_cell < dy - half_cell < half_cell:
+                    self.setx(y + CELL_SIZE)
+                    self.state = "stop"
 
     def turn_right(self) -> None:
         self.setheading(0) # the number indicate kung saan nakaharaap dapat si pacman
